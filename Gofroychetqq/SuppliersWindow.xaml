@@ -1,0 +1,40 @@
+﻿<Window x:Class="Gofroychetqq.SuppliersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gofroychetqq"
+        mc:Ignorable="d"
+        Title="Поставщики" Height="600" Width="1200" WindowStartupLocation="CenterScreen" Background="#FF23272A">
+    <Grid>
+        <Border Background="#FF2C2F33" CornerRadius="10" Margin="20">
+            <StackPanel>
+                <TextBlock Text="Список поставщиков" FontSize="24" FontWeight="Bold" Foreground="#FF7289DA" Margin="0,10,0,10" HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                    <Button Content="Добавить" Width="100" Height="30" Margin="5" Background="#FF7289DA" Foreground="White" FontSize="14" Click="AddButton_Click"/>
+                    <Button Content="Редактировать" Width="120" Height="30" Margin="5" Background="#FF7289DA" Foreground="White" FontSize="14" Click="EditButton_Click" Style="{StaticResource ButtonStyle}"/>
+                    <Button Content="Удалить" Width="100" Height="30" Margin="5" Background="#FF7289DA" Foreground="White" FontSize="14" Click="DeleteButton_Click" Style="{StaticResource ButtonStyle}"/>
+                </StackPanel>
+                <DataGrid x:Name="SuppliersDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10" Background="#23272A" Foreground="White" GridLinesVisibility="None" HeadersVisibility="Column" RowBackground="#2C2F33" AlternatingRowBackground="#23272A">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF7289DA"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding SupplierID}" Width="Auto" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="ИНН" Binding="{Binding INN}" Width="150"/>
+                        <DataGridTextColumn Header="Адрес" Binding="{Binding Address}" Width="200"/>
+                        <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="150"/>
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150"/>
+                        <DataGridTextColumn Header="Контактное лицо" Binding="{Binding ContactPerson}" Width="200"/>
+                        <DataGridTextColumn Header="Примечание" Binding="{Binding Note}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

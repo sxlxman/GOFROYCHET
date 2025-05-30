@@ -1,0 +1,118 @@
+﻿<Window x:Class="Gofroychetqq.PrihodWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gofroychetqq"
+        mc:Ignorable="d"
+        Title="Оформление прихода сырья" Height="600" Width="800" 
+        WindowStartupLocation="CenterScreen" Background="#FF23272A">
+    <Window.Resources>
+        <!-- Стили для темной темы -->
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="BorderBrush" Value="#FF7289DA"/>
+        </Style>
+
+        <Style TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="Background" Value="#FF23272A"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style TargetType="{x:Type DatePicker}">
+            <Setter Property="BorderBrush" Value="#FF7289DA"/>
+        </Style>
+        <Style TargetType="{x:Type DatePickerTextBox}">
+            <Setter Property="Background" Value="#FF23272A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF7289DA"/>
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <Border Background="#FF2C2F33" CornerRadius="10" Margin="20">
+            <StackPanel Margin="20">
+                <TextBlock Text="Оформление прихода сырья" FontSize="24" FontWeight="Bold" 
+                         Foreground="#FF7289DA" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+
+                <!-- Выбор поставщика -->
+                <StackPanel Margin="0,5">
+                    <TextBlock Text="Поставщик:" Foreground="White" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="SupplierComboBox" Padding="5"
+                              Background="#FF23272A" Foreground="White" BorderBrush="#FF7289DA">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Foreground="White"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Номер документа -->
+                <StackPanel Margin="0,5">
+                    <TextBlock Text="Номер документа::" Foreground="White" Margin="0,0,0,5"/>
+                    <TextBox x:Name="DocumentNumberTextBox" Background="#23272A" Foreground="White" 
+                            BorderBrush="#FF7289DA" Padding="5"/>
+                </StackPanel>
+
+                <!-- Дата поставки -->
+                <StackPanel Margin="0,5">
+                    <TextBlock Text="Дата поставки:" Foreground="White" Margin="0,0,0,5"/>
+                    <DatePicker x:Name="SupplyDatePicker" Padding="5"
+                                Background="#FF23272A" Foreground="White" BorderBrush="#FF7289DA"/>
+                </StackPanel>
+
+                <!-- Примечание -->
+                <StackPanel Margin="0,5">
+                    <TextBlock Text="Примечание:" Foreground="White" Margin="0,0,0,5"/>
+                    <TextBox x:Name="NoteTextBox" Background="#23272A" Foreground="White" 
+                            BorderBrush="#FF7289DA" Padding="5" TextWrapping="Wrap" 
+                            AcceptsReturn="True" Height="60"/>
+                </StackPanel>
+
+                <!-- Список материалов -->
+                <TextBlock Text="Материалы:" Foreground="White" Margin="0,10,0,5"/>
+                <DataGrid x:Name="MaterialsDataGrid" AutoGenerateColumns="False" CanUserAddRows="True" 
+                         Margin="0,5" Height="200" Background="#23272A" Foreground="White" 
+                         GridLinesVisibility="None" HeadersVisibility="Column" 
+                         RowBackground="#2C2F33" AlternatingRowBackground="#23272A">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF7289DA"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridComboBoxColumn Header="Материал" Width="*" 
+                                              x:Name="MaterialColumn" DisplayMemberPath="Name">
+                            <DataGridComboBoxColumn.ElementStyle>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="Background" Value="#23272A"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="BorderBrush" Value="#FF7289DA"/>
+                                </Style>
+                            </DataGridComboBoxColumn.ElementStyle>
+                            <DataGridComboBoxColumn.EditingElementStyle>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="Background" Value="#23272A"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="BorderBrush" Value="#FF7289DA"/>
+                                </Style>
+                            </DataGridComboBoxColumn.EditingElementStyle>
+                        </DataGridComboBoxColumn>
+                        <DataGridTextColumn Header="Количество" Width="150" 
+                                          x:Name="QuantityColumn" Binding="{Binding Quantity}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Кнопки -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <Button Content="Сохранить" Width="120" Height="30" Margin="5" 
+                            Style="{StaticResource ButtonStyle}" Click="SaveButton_Click"/>
+                    <Button Content="Отмена" Width="120" Height="30" Margin="5" 
+                            Style="{StaticResource ButtonStyle}" Click="CancelButton_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
