@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gofroychetqq"
         mc:Ignorable="d"
-        Title="Главное окно" Height="600" Width="1000" WindowStartupLocation="CenterScreen" Background="#FF23272A">
+        Title="Главное окно" Height="600" Width="1000" WindowStartupLocation="CenterScreen" Background="White">
     <Grid>
-        <Border Background="#FF2C2F33" CornerRadius="10" Margin="20">
+        <Border Background="#FFE0E0E0" CornerRadius="10" Margin="20">
             <StackPanel Margin="20">
                 <!-- Панель пользователя -->
                 <Grid Margin="0,0,0,20">
@@ -20,11 +20,11 @@
                     <!-- Фото и информация о пользователе -->
                     <StackPanel Orientation="Horizontal" Grid.Column="0">
                         <Border Width="40" Height="40" CornerRadius="20" Margin="0,0,10,0" 
-                                BorderBrush="#FF7289DA" BorderThickness="2">
+                                BorderBrush="#FFB0B0B0" BorderThickness="1">
                             <Image x:Name="UserPhoto" Width="36" Height="36" Stretch="UniformToFill" 
                                    ClipToBounds="True"/>
                         </Border>
-                        <TextBlock x:Name="UserInfoText" FontSize="14" Foreground="White" 
+                        <TextBlock x:Name="UserInfoText" FontSize="14" Foreground="Black" 
                                  VerticalAlignment="Center"/>
                     </StackPanel>
 
@@ -39,7 +39,7 @@
                 </Grid>
 
                 <TextBlock Text="Система управления складом" FontSize="24" FontWeight="Bold" 
-                         Foreground="#FF7289DA" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+                         Foreground="Black" Margin="0,0,0,20" HorizontalAlignment="Center"/>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -53,7 +53,7 @@
 
                     <!-- Управление товарами -->
                     <GroupBox Grid.Column="0" Grid.Row="0" Header="Управление сырьем" 
-                             Foreground="#FF7289DA" Margin="5" BorderBrush="#FF7289DA">
+                             Foreground="Black" Margin="5" BorderBrush="#FFB0B0B0">
                         <StackPanel Margin="10">
                             <Button Content="Сырье" Width="200" Height="40" Margin="5" 
                                     Style="{StaticResource ButtonStyle}" Click="RawMaterialsButton_Click"/>
@@ -62,7 +62,7 @@
 
                     <!-- Управление поставщиками -->
                     <GroupBox Grid.Column="1" Grid.Row="0" Header="Управление поставщиками" 
-                             Foreground="#FF7289DA" Margin="5" BorderBrush="#FF7289DA">
+                             Foreground="Black" Margin="5" BorderBrush="#FFB0B0B0">
                         <StackPanel Margin="10">
                             <Button Content="Поставщики" Width="200" Height="40" Margin="5" 
                                     Style="{StaticResource ButtonStyle}" Click="SuppliersButton_Click"/>
@@ -73,7 +73,7 @@
 
                     <!-- Управление поставками -->
                     <GroupBox Grid.Column="0" Grid.Row="1" Header="Управление поставками" 
-                             Foreground="#FF7289DA" Margin="5" BorderBrush="#FF7289DA">
+                             Foreground="Black" Margin="5" BorderBrush="#FFB0B0B0">
                         <StackPanel Margin="10">
                             <Button Content="Оформить приход сырья" Width="200" Height="40" Margin="5" 
                                     Style="{StaticResource ButtonStyle}" Click="CreatePrihodButton_Click"/>
@@ -84,7 +84,7 @@
 
                     <!-- Отчеты -->
                     <GroupBox Grid.Column="1" Grid.Row="1" Header="Отчеты" 
-                             Foreground="#FF7289DA" Margin="5" BorderBrush="#FF7289DA">
+                             Foreground="Black" Margin="5" BorderBrush="#FFB0B0B0">
                         <StackPanel Margin="10">
                             <Button Content="Остатки" Width="200" Height="40" Margin="5" 
                                     Style="{StaticResource ButtonStyle}" Click="RemainsButton_Click"/>

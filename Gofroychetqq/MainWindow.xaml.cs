@@ -102,8 +102,9 @@ namespace Gofroychetqq
 
         private void IncomeButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Реализовать открытие окна прихода
-            MessageBox.Show("Функционал в разработке", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            var prihodWindow = new PrihodWindow(_currentUser);
+            prihodWindow.Owner = this;
+            prihodWindow.ShowDialog();
         }
 
         private void OutcomeButton_Click(object sender, RoutedEventArgs e)
@@ -126,7 +127,7 @@ namespace Gofroychetqq
 
         private void CreatePrihodButton_Click(object sender, RoutedEventArgs e)
         {
-            var prihodWindow = new PrihodWindow();
+            var prihodWindow = new PrihodWindow(_currentUser);
             prihodWindow.Owner = this;
             prihodWindow.ShowDialog();
         }

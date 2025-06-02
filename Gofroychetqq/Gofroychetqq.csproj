@@ -61,6 +61,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="System.Printing" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -85,6 +86,7 @@
     <Compile Include="Material.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="MaterialQuantity.cs" />
     <Compile Include="MaterialType.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -95,6 +97,9 @@
     </Compile>
     <Compile Include="Nakladnaya.cs">
       <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NakladnayaPrintWindow.xaml.cs">
+      <DependentUpon>NakladnayaPrintWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Prihod.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -161,6 +166,10 @@
     <Page Include="ManageAccountsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NakladnayaPrintWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PrihodWindow.xaml">
       <SubType>Designer</SubType>

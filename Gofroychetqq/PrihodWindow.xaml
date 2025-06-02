@@ -6,109 +6,153 @@
         xmlns:local="clr-namespace:Gofroychetqq"
         mc:Ignorable="d"
         Title="Оформление прихода сырья" Height="600" Width="800" 
-        WindowStartupLocation="CenterScreen" Background="#FF23272A">
+        WindowStartupLocation="CenterScreen" Background="White">
     <Window.Resources>
-        <!-- Стили для темной темы -->
+        <!-- Стили для светлой темы -->
         <Style TargetType="{x:Type ComboBox}">
-            <Setter Property="BorderBrush" Value="#FF7289DA"/>
+            <Setter Property="BorderBrush" Value="#FFB0B0B0"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
         </Style>
 
         <Style TargetType="{x:Type ComboBoxItem}">
-            <Setter Property="Background" Value="#FF23272A"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
         </Style>
 
         <Style TargetType="{x:Type DatePicker}">
-            <Setter Property="BorderBrush" Value="#FF7289DA"/>
+            <Setter Property="BorderBrush" Value="#FFB0B0B0"/>
         </Style>
         <Style TargetType="{x:Type DatePickerTextBox}">
-            <Setter Property="Background" Value="#FF23272A"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="#FF7289DA"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="#FFB0B0B0"/>
+        </Style>
+        
+        <!-- Стили для DataGrid -->
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#FFE0E0E0"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#FFF0F0F0"/>
+            <Setter Property="BorderBrush" Value="#FFE0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Background" Value="#FFB0B0B0"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="DataGridContentText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        
+        <Style x:Key="DataGridContentEdit" TargetType="TextBox">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="#FFB0B0B0"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
 
     </Window.Resources>
     <Grid>
-        <Border Background="#FF2C2F33" CornerRadius="10" Margin="20">
+        <Border Background="#FFE0E0E0" CornerRadius="10" Margin="20">
             <StackPanel Margin="20">
                 <TextBlock Text="Оформление прихода сырья" FontSize="24" FontWeight="Bold" 
-                         Foreground="#FF7289DA" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+                         Foreground="Black" Margin="0,0,0,20" HorizontalAlignment="Center"/>
 
                 <!-- Выбор поставщика -->
                 <StackPanel Margin="0,5">
-                    <TextBlock Text="Поставщик:" Foreground="White" Margin="0,0,0,5"/>
-                    <ComboBox x:Name="SupplierComboBox" Padding="5"
-                              Background="#FF23272A" Foreground="White" BorderBrush="#FF7289DA">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" Foreground="White"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    <TextBlock Text="Поставщик:" Foreground="Black" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="SupplierComboBox" Padding="5"/>
                 </StackPanel>
 
                 <!-- Номер документа -->
                 <StackPanel Margin="0,5">
-                    <TextBlock Text="Номер документа::" Foreground="White" Margin="0,0,0,5"/>
-                    <TextBox x:Name="DocumentNumberTextBox" Background="#23272A" Foreground="White" 
-                            BorderBrush="#FF7289DA" Padding="5"/>
+                    <TextBlock Text="Номер документа:" Foreground="Black" Margin="0,0,0,5"/>
+                    <TextBox x:Name="DocumentNumberTextBox" Padding="5" Style="{StaticResource DataGridContentEdit}"/>
                 </StackPanel>
 
                 <!-- Дата поставки -->
                 <StackPanel Margin="0,5">
-                    <TextBlock Text="Дата поставки:" Foreground="White" Margin="0,0,0,5"/>
-                    <DatePicker x:Name="SupplyDatePicker" Padding="5"
-                                Background="#FF23272A" Foreground="White" BorderBrush="#FF7289DA"/>
+                    <TextBlock Text="Дата поставки:" Foreground="Black" Margin="0,0,0,5"/>
+                    <DatePicker x:Name="SupplyDatePicker" Padding="5"/>
                 </StackPanel>
 
                 <!-- Примечание -->
                 <StackPanel Margin="0,5">
-                    <TextBlock Text="Примечание:" Foreground="White" Margin="0,0,0,5"/>
-                    <TextBox x:Name="NoteTextBox" Background="#23272A" Foreground="White" 
-                            BorderBrush="#FF7289DA" Padding="5" TextWrapping="Wrap" 
-                            AcceptsReturn="True" Height="60"/>
+                    <TextBlock Text="Примечание:" Foreground="Black" Margin="0,0,0,5"/>
+                    <TextBox x:Name="NoteTextBox" Padding="5" TextWrapping="Wrap" 
+                            AcceptsReturn="True" Height="60" Style="{StaticResource DataGridContentEdit}"/>
                 </StackPanel>
 
                 <!-- Список материалов -->
-                <TextBlock Text="Материалы:" Foreground="White" Margin="0,10,0,5"/>
-                <DataGrid x:Name="MaterialsDataGrid" AutoGenerateColumns="False" CanUserAddRows="True" 
-                         Margin="0,5" Height="200" Background="#23272A" Foreground="White" 
-                         GridLinesVisibility="None" HeadersVisibility="Column" 
-                         RowBackground="#2C2F33" AlternatingRowBackground="#23272A">
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="#FF7289DA"/>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="FontWeight" Value="Bold"/>
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
-                    <DataGrid.Columns>
-                        <DataGridComboBoxColumn Header="Материал" Width="*" 
-                                              x:Name="MaterialColumn" DisplayMemberPath="Name">
-                            <DataGridComboBoxColumn.ElementStyle>
-                                <Style TargetType="ComboBox">
-                                    <Setter Property="Background" Value="#23272A"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                    <Setter Property="BorderBrush" Value="#FF7289DA"/>
-                                </Style>
-                            </DataGridComboBoxColumn.ElementStyle>
-                            <DataGridComboBoxColumn.EditingElementStyle>
-                                <Style TargetType="ComboBox">
-                                    <Setter Property="Background" Value="#23272A"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                    <Setter Property="BorderBrush" Value="#FF7289DA"/>
-                                </Style>
-                            </DataGridComboBoxColumn.EditingElementStyle>
-                        </DataGridComboBoxColumn>
-                        <DataGridTextColumn Header="Количество" Width="150" 
-                                          x:Name="QuantityColumn" Binding="{Binding Quantity}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <StackPanel Margin="0,10,0,5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Материалы:" Foreground="Black" Margin="0,0,0,5"/>
+                        <Button Grid.Column="1" Content="Добавить материал" 
+                                Style="{StaticResource ButtonStyle}"
+                                Click="AddMaterial_Click"
+                                Padding="10,5"/>
+                    </Grid>
+                    <DataGrid x:Name="MaterialsDataGrid" 
+                             AutoGenerateColumns="False" 
+                             CanUserAddRows="False"
+                             CanUserDeleteRows="True"
+                             Margin="0,5" 
+                             Height="200">
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn Header="Материал" Width="*" 
+                                                  x:Name="MaterialColumn" DisplayMemberPath="Name">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}"/>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}"/>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+                            <DataGridTextColumn Header="Количество" Width="150" 
+                                              x:Name="QuantityColumn" Binding="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource DataGridContentText}">
+                                        <Setter Property="TextAlignment" Value="Right"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                                <DataGridTextColumn.EditingElementStyle>
+                                    <Style TargetType="TextBox" BasedOn="{StaticResource DataGridContentEdit}">
+                                        <Setter Property="TextAlignment" Value="Right"/>
+                                    </Style>
+                                </DataGridTextColumn.EditingElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Width="Auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Удалить" 
+                                                Style="{StaticResource ButtonStyle}"
+                                                Click="DeleteMaterial_Click"
+                                                Margin="5"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
 
                 <!-- Кнопки -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
                     <Button Content="Сохранить" Width="120" Height="30" Margin="5" 
                             Style="{StaticResource ButtonStyle}" Click="SaveButton_Click"/>
+                    <Button Content="Печать накладной" Width="120" Height="30" Margin="5" 
+                            Style="{StaticResource ButtonStyle}" Click="PrintButton_Click" x:Name="PrintButton" IsEnabled="False"/>
                     <Button Content="Отмена" Width="120" Height="30" Margin="5" 
                             Style="{StaticResource ButtonStyle}" Click="CancelButton_Click"/>
                 </StackPanel>

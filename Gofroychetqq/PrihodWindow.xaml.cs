@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace Gofroychetqq
 {
@@ -21,11 +22,14 @@ namespace Gofroychetqq
     {
         private etonEntities _context;
         private List<Material> _materials;
+        private User _currentUser;
+        private Supply _currentSupply;
 
-        public PrihodWindow()
+        public PrihodWindow(User currentUser)
         {
             InitializeComponent();
             _context = new etonEntities();
+            _currentUser = currentUser;
             LoadData();
         }
 
@@ -55,30 +59,11 @@ namespace Gofroychetqq
         {
             try
             {
-                // Проверка заполнения обязательных полей
-                if (SupplierComboBox.SelectedItem == null)
-                {
-                    MessageBox.Show("Выберите поставщика", "Предупреждение",
-                                  MessageBoxButton.OK, MessageBoxImage.Warning);
+                if (!ValidateInput())
                     return;
-                }
 
-                if (string.IsNullOrWhiteSpace(DocumentNumberTextBox.Text))
-                {
-                    MessageBox.Show("Введите номер документа", "Предупреждение",
-                                  MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                if (!SupplyDatePicker.SelectedDate.HasValue)
-                {
-                    MessageBox.Show("Выберите дату поставки", "Предупреждение",
-                                  MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                // Создание записи о поставке
-                var supply = new Supply
+                // 1. Создаем поставку
+                _currentSupply = new Supply
                 {
                     SupplierID = ((Supplier)SupplierComboBox.SelectedItem).SupplierID,
                     DocumentNumber = DocumentNumberTextBox.Text,
@@ -86,11 +71,20 @@ namespace Gofroychetqq
                     Note = NoteTextBox.Text,
                     SupplyStatusID = 1 // Статус "Новая поставка"
                 };
-
-                _context.Supply.Add(supply);
+                _context.Supply.Add(_currentSupply);
                 _context.SaveChanges();
 
-                // Создание записей о приходе материалов
+                // 2. Создаем накладную
+                var nakladnaya = new Nakladnaya
+                {
+                    Number = GetNextNakladnayaNumber(),
+                    CreateDate = DateTime.Now,
+                    TypeNakladnaya = 1 // Тип "Приходная накладная"
+                };
+                _context.Nakladnaya.Add(nakladnaya);
+                _context.SaveChanges();
+
+                // 3. Создаем записи прихода
                 foreach (var item in MaterialsDataGrid.Items)
                 {
                     var materialItem = item as dynamic;
@@ -98,10 +92,12 @@ namespace Gofroychetqq
                     {
                         var prihod = new Prihod
                         {
-                            SupplyID = supply.SupplyID,
+                            SupplyID = _currentSupply.SupplyID,
                             MaterialID = materialItem.Material.MaterialID,
                             Quantity = materialItem.Quantity,
-                            PrihodDate = DateTime.Now
+                            PrihodDate = DateTime.Now,
+                            UserID = _currentUser.UserID,
+                            NakladnayaID = nakladnaya.NakladnayaID
                         };
                         _context.Prihod.Add(prihod);
                     }
@@ -110,8 +106,9 @@ namespace Gofroychetqq
                 _context.SaveChanges();
                 MessageBox.Show("Приход сырья успешно оформлен", "Успех",
                               MessageBoxButton.OK, MessageBoxImage.Information);
-                DialogResult = true;
-                Close();
+
+                // Активируем кнопку печати
+                PrintButton.IsEnabled = true;
             }
             catch (Exception ex)
             {
@@ -120,10 +117,99 @@ namespace Gofroychetqq
             }
         }
 
+        private bool ValidateInput()
+        {
+            if (SupplierComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите поставщика", "Предупреждение",
+                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(DocumentNumberTextBox.Text))
+            {
+                MessageBox.Show("Введите номер документа", "Предупреждение",
+                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            if (!SupplyDatePicker.SelectedDate.HasValue)
+            {
+                MessageBox.Show("Выберите дату поставки", "Предупреждение",
+                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            // Проверка на наличие материалов
+            if (MaterialsDataGrid.Items.Count == 0)
+            {
+                MessageBox.Show("Добавьте хотя бы один материал", "Предупреждение",
+                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            // Проверка на корректность количества
+            foreach (var item in MaterialsDataGrid.Items)
+            {
+                var materialItem = item as dynamic;
+                if (materialItem?.Material == null || materialItem.Quantity <= 0)
+                {
+                    MessageBox.Show("Укажите корректное количество для всех материалов", "Предупреждение",
+                                  MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private int GetNextNakladnayaNumber()
+        {
+            var lastNakladnaya = _context.Nakladnaya
+                .OrderByDescending(n => n.Number)
+                .FirstOrDefault();
+
+            return lastNakladnaya?.Number + 1 ?? 1;
+        }
+
+        private void PrintButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentSupply != null)
+            {
+                var printWindow = new NakladnayaPrintWindow(_currentSupply);
+                printWindow.ShowDialog();
+            }
+        }
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();
+        }
+
+        private void AddMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            var materials = MaterialsDataGrid.ItemsSource as ObservableCollection<MaterialQuantity>;
+            if (materials == null)
+            {
+                materials = new ObservableCollection<MaterialQuantity>();
+                MaterialsDataGrid.ItemsSource = materials;
+            }
+            materials.Add(new MaterialQuantity { Quantity = 0 });
+        }
+
+        private void DeleteMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button != null)
+            {
+                var material = button.DataContext as MaterialQuantity;
+                if (material != null)
+                {
+                    var materials = MaterialsDataGrid.ItemsSource as ObservableCollection<MaterialQuantity>;
+                    materials?.Remove(material);
+                }
+            }
         }
     }
 }
