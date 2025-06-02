@@ -38,6 +38,7 @@
         <DatePicker x:Name="RashodDatePicker" Grid.Row="5" Grid.Column="1" Margin="0,0,0,10"/>
 
         <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="PrintButton" Content="Печать" Width="120" Height="30" Margin="0,0,10,0" Click="PrintButton_Click" Style="{StaticResource ButtonStyle}"/>
             <Button x:Name="SaveButton" Content="Сохранить" Width="120" Height="30" Margin="0,0,10,0" Click="SaveButton_Click" Style="{StaticResource ButtonStyle}"/>
             <Button x:Name="CancelButton" Content="Отмена" Width="120" Height="30" Click="CancelButton_Click" Style="{StaticResource ButtonStyle}"/>
         </StackPanel>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 
 namespace Gofroychetqq
 {
@@ -174,10 +175,27 @@ namespace Gofroychetqq
 
         private void PrintButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentSupply != null)
+            try
             {
-                var printWindow = new NakladnayaPrintWindow(_currentSupply);
-                printWindow.ShowDialog();
+                // Получаем базовый каталог приложения
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                // Формируем полный путь к файлу PDF в подкаталоге Templates
+                string pdfFilePath = System.IO.Path.Combine(baseDirectory, "Templates", "nakladnaya.pdf");
+
+                // Проверяем, существует ли файл
+                if (System.IO.File.Exists(pdfFilePath))
+                {
+                    // Открываем PDF файл в браузере
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(pdfFilePath) { UseShellExecute = true });
+                }
+                else
+                {
+                    MessageBox.Show($"Файл шаблона накладной не найден: {pdfFilePath}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при открытии накладной: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

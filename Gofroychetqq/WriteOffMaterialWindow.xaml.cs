@@ -129,5 +129,31 @@ namespace Gofroychetqq
             DialogResult = false;
             Close();
         }
+
+        private void PrintButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Получаем базовый каталог приложения
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                // Формируем полный путь к файлу PDF в подкаталоге Templates
+                string pdfFilePath = System.IO.Path.Combine(baseDirectory, "Templates", "nakladnaya.pdf");
+
+                // Проверяем, существует ли файл
+                if (System.IO.File.Exists(pdfFilePath))
+                {
+                    // Открываем PDF файл в браузере
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(pdfFilePath) { UseShellExecute = true });
+                }
+                else
+                {
+                    MessageBox.Show($"Файл шаблона накладной не найден: {pdfFilePath}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при открытии накладной: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }
