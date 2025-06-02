@@ -38,24 +38,27 @@ namespace Gofroychetqq
 
         private void EditMaterial_Click(object sender, RoutedEventArgs e)
         {
-            var material = ((FrameworkElement)sender).Tag;
-            if (material != null)
+            var selectedMaterial = RawMaterialsDataGrid.SelectedItem as dynamic;
+            if (selectedMaterial != null)
             {
-                // �������� MaterialID ����� ���������, ��� ��� ��� ��������� ���
-                var materialIDProperty = material.GetType().GetProperty("MaterialID");
-                if (materialIDProperty != null)
+                var editWindow = new EditMaterialWindow(selectedMaterial.MaterialID);
+                if (editWindow.ShowDialog() == true)
                 {
-                    int materialID = (int)materialIDProperty.GetValue(material);
-                    var dbMaterial = db.Material.FirstOrDefault(x => x.MaterialID == materialID);
-                    if (dbMaterial != null)
-                    {
-                        var editWindow = new EditMaterialWindow(dbMaterial);
-                        if (editWindow.ShowDialog() == true)
-                        {
-                            LoadMaterials();
-                        }
-                    }
+                    LoadMaterials();
                 }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите материал для редактирования", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void WriteOffMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            var writeOffWindow = new WriteOffMaterialWindow();
+            if (writeOffWindow.ShowDialog() == true)
+            {
+                LoadMaterials();
             }
         }
 

@@ -109,8 +109,9 @@ namespace Gofroychetqq
 
         private void OutcomeButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Реализовать открытие окна расхода
-            MessageBox.Show("Функционал в разработке", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            var writeOffWindow = new WriteOffMaterialWindow();
+            writeOffWindow.Owner = this;
+            writeOffWindow.ShowDialog();
         }
 
         private void RemainsButton_Click(object sender, RoutedEventArgs e)

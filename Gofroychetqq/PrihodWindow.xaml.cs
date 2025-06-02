@@ -94,7 +94,7 @@ namespace Gofroychetqq
                         {
                             SupplyID = _currentSupply.SupplyID,
                             MaterialID = materialItem.Material.MaterialID,
-                            Quantity = materialItem.Quantity,
+                            Quantity = (double)materialItem.Quantity,
                             PrihodDate = DateTime.Now,
                             UserID = _currentUser.UserID,
                             NakladnayaID = nakladnaya.NakladnayaID
@@ -208,6 +208,35 @@ namespace Gofroychetqq
                 {
                     var materials = MaterialsDataGrid.ItemsSource as ObservableCollection<MaterialQuantity>;
                     materials?.Remove(material);
+                }
+            }
+        }
+
+        private void MaterialsDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.Column.Header.ToString() == "Количество")
+            {
+                if (e.EditingElement is TextBox textBox)
+                {
+                    var editedValue = textBox.Text;
+                    var materialItem = e.Row.Item as MaterialQuantity;
+
+                    if (materialItem != null)
+                    {
+                        if (decimal.TryParse(editedValue, out decimal quantity))
+                        {
+                            // Успешно преобразовано, обновляем свойство
+                            materialItem.Quantity = quantity;
+                        }
+                        else
+                        {
+                            // Ошибка преобразования, возможно, стоит уведомить пользователя или сбросить значение
+                            // Например, можно вывести сообщение или оставить предыдущее значение
+                             MessageBox.Show("Введите корректное числовое значение для количества.", "Ошибка ввода", MessageBoxButton.OK, MessageBoxImage.Error);
+                            // Можно также сбросить текст в TextBox или значение в объекте
+                             textBox.Undo(); // Отменить ввод пользователя
+                        }
+                    }
                 }
             }
         }

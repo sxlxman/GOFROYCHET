@@ -69,7 +69,13 @@
                 <!-- Выбор поставщика -->
                 <StackPanel Margin="0,5">
                     <TextBlock Text="Поставщик:" Foreground="Black" Margin="0,0,0,5"/>
-                    <ComboBox x:Name="SupplierComboBox" Padding="5"/>
+                    <ComboBox x:Name="SupplierComboBox" Padding="5">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Foreground="Black"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
 
                 <!-- Номер документа -->
@@ -119,6 +125,9 @@
                                 <DataGridComboBoxColumn.EditingElementStyle>
                                     <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}"/>
                                 </DataGridComboBoxColumn.EditingElementStyle>
+                                <DataGridComboBoxColumn.SelectedValueBinding>
+                                    <Binding Path="Material" UpdateSourceTrigger="PropertyChanged"/>
+                                </DataGridComboBoxColumn.SelectedValueBinding>
                             </DataGridComboBoxColumn>
                             <DataGridTextColumn Header="Количество" Width="150" 
                                               x:Name="QuantityColumn" Binding="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}">
